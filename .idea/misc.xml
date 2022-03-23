@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.5065" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/drawable/ic_launcher_background.xml" value="0.229" />
+        <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/activity_camera_preview.xml" value="0.5" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/activity_create_food.xml" value="0.5" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/affirmation_item.xml" value="0.421875" />

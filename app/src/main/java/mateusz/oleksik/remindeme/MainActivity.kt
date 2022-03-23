@@ -3,7 +3,11 @@ package mateusz.oleksik.remindeme
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.camera.core.ImageCapture
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import mateusz.oleksik.remindeme.fragments.FoodCreateFragment
 import mateusz.oleksik.remindeme.fragments.FoodListFragment
 import mateusz.oleksik.remindeme.interfaces.FoodCreateDialogListener
