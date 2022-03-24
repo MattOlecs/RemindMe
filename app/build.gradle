@@ -46,10 +46,13 @@ kapt {
 
 dependencies {
 
+    //General
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+
+    //Text recognition
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.0'
 
     //Coroutines
