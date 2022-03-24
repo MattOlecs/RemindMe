@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.core.ImageCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -24,8 +23,6 @@ import mateusz.oleksik.remindeme.Food
 import mateusz.oleksik.remindeme.R
 import mateusz.oleksik.remindeme.interfaces.FoodCreateDialogListener
 import mateusz.oleksik.remindeme.utils.CameraUtils
-import java.sql.Date
-import java.time.LocalDate
 
 class FoodCreateFragment(
     private val listener: FoodCreateDialogListener
@@ -33,9 +30,7 @@ class FoodCreateFragment(
 
     private lateinit var imageView: ImageView
     private lateinit var nameTextView: TextView
-    private val REQUEST_CODE_PERMISSIONS = 10
-
-    val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+    private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
     var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -112,11 +107,11 @@ class FoodCreateFragment(
             resultLauncher.launch(intent)
         } else {
             ActivityCompat.requestPermissions(
-                requireActivity(), CameraUtils.REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+                requireActivity(), CameraUtils.CAMERA_REQUIRED_PERMISSIONS, CameraUtils.CAMERA_REQUEST_CODE_PERMISSIONS)
         }
     }
 
-    private fun allPermissionsGranted() = CameraUtils.REQUIRED_PERMISSIONS.all {
+    private fun allPermissionsGranted() = CameraUtils.CAMERA_REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(
             requireContext(), it) == PackageManager.PERMISSION_GRANTED
     }

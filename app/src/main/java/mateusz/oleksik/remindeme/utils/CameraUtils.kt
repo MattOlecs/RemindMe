@@ -20,7 +20,8 @@ class CameraUtils {
 
         private val ORIENTATIONS = SparseIntArray()
 
-        val REQUIRED_PERMISSIONS =
+        val CAMERA_REQUEST_CODE_PERMISSIONS = 10
+        val CAMERA_REQUIRED_PERMISSIONS =
             mutableListOf (
                 Manifest.permission.CAMERA,
             ).apply {
