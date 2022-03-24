@@ -21,11 +21,11 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import mateusz.oleksik.remindeme.Food
 import mateusz.oleksik.remindeme.R
-import mateusz.oleksik.remindeme.interfaces.FoodCreateDialogListener
+import mateusz.oleksik.remindeme.interfaces.IFoodCreateDialogListener
 import mateusz.oleksik.remindeme.utils.CameraUtils
 
 class FoodCreateFragment(
-    private val listener: FoodCreateDialogListener
+    private val listenerI: IFoodCreateDialogListener
     ) : DialogFragment() {
 
     private lateinit var imageView: ImageView
@@ -82,7 +82,7 @@ class FoodCreateFragment(
             val expirationDate = calendarView.date
 
 
-            listener.onCreatedFood(Food(0, foodName, expirationDate))
+            listenerI.onCreatedFood(Food(0, foodName, expirationDate))
             dismiss()
         }
 

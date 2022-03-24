@@ -13,10 +13,10 @@ import mateusz.oleksik.remindeme.Food
 import mateusz.oleksik.remindeme.adapters.FoodAdapter
 import mateusz.oleksik.remindeme.database.repositories.FoodStorageRepository
 import mateusz.oleksik.remindeme.databinding.FragmentFoodListBinding
-import mateusz.oleksik.remindeme.interfaces.FoodItemClickListener
+import mateusz.oleksik.remindeme.interfaces.IFoodItemClickListener
 import mateusz.oleksik.remindeme.utils.Constants
 
-class FoodListFragment : Fragment(), FoodItemClickListener {
+class IFoodListFragment : Fragment(), IFoodItemClickListener {
 
     private lateinit var foodStorageRepository: FoodStorageRepository
     private lateinit var foodList: MutableList<Food>
@@ -24,8 +24,8 @@ class FoodListFragment : Fragment(), FoodItemClickListener {
 
     companion object {
 
-        fun newInstance(): FoodListFragment {
-            return FoodListFragment()
+        fun newInstance(): IFoodListFragment {
+            return IFoodListFragment()
         }
     }
 

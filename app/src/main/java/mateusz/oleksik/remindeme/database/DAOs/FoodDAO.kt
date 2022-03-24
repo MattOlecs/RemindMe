@@ -5,7 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import mateusz.oleksik.remindeme.Food
-import mateusz.oleksik.remindeme.User
 
 @Dao
 interface FoodDAO {

@@ -8,12 +8,12 @@ import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import mateusz.oleksik.remindeme.Food
 import mateusz.oleksik.remindeme.databinding.RecyclerFoodItemBinding
-import mateusz.oleksik.remindeme.interfaces.FoodItemClickListener
+import mateusz.oleksik.remindeme.interfaces.IFoodItemClickListener
 import mateusz.oleksik.remindeme.utils.Constants
 
 class FoodAdapter(
     private val foodsList: MutableList<Food>,
-    private val listener: FoodItemClickListener
+    private val listenerI: IFoodItemClickListener
 ) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
     init {
@@ -40,7 +40,7 @@ class FoodAdapter(
         holder.setData(food)
 
         holder.deleteButton.setOnClickListener {
-            listener.foodItemClicked(position, food)
+            listenerI.foodItemClicked(position, food)
             foodsList.remove(food)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemCount)
