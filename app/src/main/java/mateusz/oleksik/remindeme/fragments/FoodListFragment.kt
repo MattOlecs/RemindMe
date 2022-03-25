@@ -16,7 +16,7 @@ import mateusz.oleksik.remindeme.databinding.FragmentFoodListBinding
 import mateusz.oleksik.remindeme.interfaces.IFoodItemClickListener
 import mateusz.oleksik.remindeme.utils.Constants
 
-class IFoodListFragment : Fragment(), IFoodItemClickListener {
+class FoodListFragment : Fragment(), IFoodItemClickListener {
 
     private lateinit var foodStorageRepository: FoodStorageRepository
     private lateinit var foodList: MutableList<Food>
@@ -24,8 +24,8 @@ class IFoodListFragment : Fragment(), IFoodItemClickListener {
 
     companion object {
 
-        fun newInstance(): IFoodListFragment {
-            return IFoodListFragment()
+        fun newInstance(): FoodListFragment {
+            return FoodListFragment()
         }
     }
 
