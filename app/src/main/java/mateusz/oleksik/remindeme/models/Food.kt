@@ -1,4 +1,4 @@
-package mateusz.oleksik.remindeme
+package mateusz.oleksik.remindeme.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

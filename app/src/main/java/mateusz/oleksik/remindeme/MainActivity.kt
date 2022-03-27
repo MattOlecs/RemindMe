@@ -3,51 +3,54 @@ package mateusz.oleksik.remindeme
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import androidx.camera.core.ImageCapture
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import mateusz.oleksik.remindeme.databinding.ActivityMainBinding
 import mateusz.oleksik.remindeme.fragments.FoodCreateFragment
 import mateusz.oleksik.remindeme.fragments.FoodListFragment
-import mateusz.oleksik.remindeme.interfaces.FoodCreateDialogListener
-import java.time.LocalDate
-import java.util.*
+import mateusz.oleksik.remindeme.interfaces.IFoodCreateDialogListener
+import mateusz.oleksik.remindeme.models.Food
+import mateusz.oleksik.remindeme.utils.Constants
 
-class MainActivity() : AppCompatActivity(), FoodCreateDialogListener {
+class MainActivity() : AppCompatActivity(), IFoodCreateDialogListener {
 
     private lateinit var foodListFragment: FoodListFragment
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (savedInstanceState == null) {
+            generateFoodList()
 
-            var fragmentTag: String = "foodList"
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.root_layout, FoodListFragment.newInstance(), fragmentTag)
-                .commit()
-            supportFragmentManager.executePendingTransactions()
-
-            foodListFragment = supportFragmentManager.findFragmentByTag(fragmentTag) as FoodListFragment
-
-            if (foodListFragment != null){
-
-                val addButton: FloatingActionButton = findViewById(R.id.add_food_action_button)
-
-                addButton.setOnClickListener{
-                    var dialog = FoodCreateFragment(this)
-                    dialog.show(supportFragmentManager, "createFoodDialog")
-                    //foodListFragment.addFoodToAdapter(Food(0, "Agrest", 20220101))
-                }
+            binding.addFoodActionButton.setOnClickListener {
+                openCreateFoodDialog()
             }
         }
     }
 
+    private fun generateFoodList() {
+        val fragmentTag = "foodList"
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.root_layout, FoodListFragment.newInstance(), fragmentTag)
+            .commit()
+        supportFragmentManager.executePendingTransactions()
+
+        foodListFragment =
+            supportFragmentManager.findFragmentByTag(fragmentTag) as FoodListFragment
+    }
+
+    private fun openCreateFoodDialog() {
+        val dialog = FoodCreateFragment(this)
+        dialog.show(supportFragmentManager, "createFoodDialog")
+    }
+
     override fun onCreatedFood(food: Food) {
-        Log.i("APPINFO", "On created food called")
+        Log.i(
+            Constants.DebugLogTag,
+            "Main activity communicated new food creation to Adapter. Food: ${food.name}"
+        )
         foodListFragment.addFoodToAdapter(food)
     }
 }

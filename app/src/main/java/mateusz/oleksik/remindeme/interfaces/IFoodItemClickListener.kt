@@ -1,7 +1,7 @@
 package mateusz.oleksik.remindeme.interfaces
 
-import mateusz.oleksik.remindeme.Food
+import mateusz.oleksik.remindeme.models.Food
 
-interface FoodItemClickListener {
+interface IFoodItemClickListener {
     fun foodItemClicked(position: Int, foodToDelete: Food)
 }
