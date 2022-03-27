@@ -18,7 +18,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import mateusz.oleksik.remindeme.Food
+import mateusz.oleksik.remindeme.models.Food
 import mateusz.oleksik.remindeme.databinding.FragmentCreateFoodBinding
 import mateusz.oleksik.remindeme.interfaces.IFoodCreateDialogListener
 import mateusz.oleksik.remindeme.utils.CameraUtils

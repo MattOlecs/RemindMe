@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.DeleteTable
 import androidx.room.RoomDatabase
 import androidx.room.migration.AutoMigrationSpec
-import mateusz.oleksik.remindeme.Food
+import mateusz.oleksik.remindeme.models.Food
 import mateusz.oleksik.remindeme.database.DAOs.FoodDAO
 
 @Database(

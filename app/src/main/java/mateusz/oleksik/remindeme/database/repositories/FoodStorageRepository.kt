@@ -1,7 +1,7 @@
 package mateusz.oleksik.remindeme.database.repositories
 
 import android.content.Context
-import mateusz.oleksik.remindeme.Food
+import mateusz.oleksik.remindeme.models.Food
 import mateusz.oleksik.remindeme.database.DAOs.FoodDAO
 
 class FoodStorageRepository(context: Context) : AbstractStorageRepository(context) {

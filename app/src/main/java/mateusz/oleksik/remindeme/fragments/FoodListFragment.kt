@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.coroutines.runBlocking
-import mateusz.oleksik.remindeme.Food
+import mateusz.oleksik.remindeme.models.Food
 import mateusz.oleksik.remindeme.adapters.FoodAdapter
 import mateusz.oleksik.remindeme.database.repositories.FoodStorageRepository
 import mateusz.oleksik.remindeme.databinding.FragmentFoodListBinding

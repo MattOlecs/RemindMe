@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
-import mateusz.oleksik.remindeme.Food
+import mateusz.oleksik.remindeme.models.Food
 import mateusz.oleksik.remindeme.databinding.RecyclerFoodItemBinding
 import mateusz.oleksik.remindeme.interfaces.IFoodItemClickListener
 import mateusz.oleksik.remindeme.utils.Constants
