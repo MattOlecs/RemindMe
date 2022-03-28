@@ -21,41 +21,44 @@
 
             <ImageView
                 android:id="@+id/food_image"
-                android:layout_width="264dp"
-                android:layout_height="194dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/image1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_food_salad_icon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/image1" />
+                app:srcCompat="@drawable/ic_food_salad_icon" />
 
             <TextView
                 android:id="@+id/food_list_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
                 android:text="@{Food.name}"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/food_image"
-                tools:text="Example food name"/>
+                app:layout_constraintBottom_toTopOf="@+id/food_list_expiration_date_text"
+                app:layout_constraintStart_toEndOf="@+id/food_image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Example food name" />
 
             <TextView
                 android:id="@+id/food_list_expiration_date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:long_to_date_formatter="@{Food.expirationDate}"
+                android:layout_marginTop="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/food_list_name_text"
-                tools:text="01-04-2020"/>
+                app:layout_constraintTop_toBottomOf="@+id/food_image"
+                app:long_to_date_formatter="@{Food.expirationDate}"
+                tools:text="01-04-2020" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/delete_food_button"
-                android:layout_width="58dp"
-                android:layout_height="43dp"
-                app:icon="@android:drawable/ic_menu_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/food_image"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:srcCompat="@android:drawable/ic_menu_delete" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

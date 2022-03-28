@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import mateusz.oleksik.remindeme.models.Food
 import mateusz.oleksik.remindeme.databinding.RecyclerFoodItemBinding
@@ -22,7 +23,7 @@ class FoodAdapter(
 
     class FoodViewHolder(view: View, private val recyclerFoodItemBinding: RecyclerFoodItemBinding) :
         RecyclerView.ViewHolder(view) {
-        val deleteButton: Button = recyclerFoodItemBinding.deleteFoodButton
+        val deleteButton: ImageButton = recyclerFoodItemBinding.deleteFoodButton
 
         fun setData(food: Food) {
             recyclerFoodItemBinding.food = food
