@@ -1,4 +1,6 @@
 package mateusz.oleksik.remindeme.exceptions
 
-class OCRException {
+import java.lang.Exception
+
+class OCRException(message: String): Exception(message) {
 }
