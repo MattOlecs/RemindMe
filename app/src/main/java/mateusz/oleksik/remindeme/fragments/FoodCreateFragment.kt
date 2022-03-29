@@ -210,7 +210,7 @@ class FoodCreateFragment(
                             } catch (ex: Exception) {
                                 Toast.makeText(
                                     context,
-                                    "Text recognition failed ${ex.message}",
+                                    "Text recognition failed: ${ex.message}",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -250,7 +250,7 @@ class FoodCreateFragment(
                             } catch (ex: Exception) {
                                 Toast.makeText(
                                     context,
-                                    "Text recognition failed ${ex.message}",
+                                    "Barcode scanning failed: ${ex.message}",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
