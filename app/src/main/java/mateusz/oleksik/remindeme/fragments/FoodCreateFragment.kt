@@ -71,10 +71,10 @@ class FoodCreateFragment(
         binding.foodCreateConfirmButton.setOnClickListener {
             createFood()
         }
-        binding.foodCreateCameraButton.setOnClickListener {
+        binding.foodCreateDateRecognitionButton.setOnClickListener {
             getExpirationDateFromImage()
         }
-        binding.foodCreateBarecodeButton.setOnClickListener {
+        binding.foodCreateBarcodeScanButton.setOnClickListener {
             scanBarcodeImage()
         }
 
