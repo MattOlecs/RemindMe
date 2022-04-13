@@ -7,6 +7,11 @@ class Constants {
         const val DebugLogTag = "DBG"
         const val InfoLogTag = "INF"
         const val CreateFoodPermissionsRequestCode = 10
+        const val NotificationId = 101
+        const val NotificationChannelId = "Main channel"
+        const val NotificationTimelineChannelId = "Main timeline channel"
+        const val NotificationExtraTitleHolderName = "NotificationTitle"
+        const val NotificationExtraContentHolderName = "NotificationContent"
 
         val CreateFoodRequiredPermissions =
             mutableListOf (

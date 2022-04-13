@@ -3,7 +3,6 @@ package mateusz.oleksik.remindeme.utils
 import android.Manifest
 import android.app.Activity
 import android.content.Context.CAMERA_SERVICE
-import android.hardware.Camera
 import android.hardware.camera2.CameraAccessException
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
@@ -11,8 +10,6 @@ import android.os.Build
 import android.util.SparseIntArray
 import android.view.Surface
 import androidx.annotation.RequiresApi
-import androidx.camera.camera2.internal.Camera2CameraInfoImpl
-import androidx.camera.camera2.interop.Camera2CameraInfo
 
 class CameraUtils {
 
