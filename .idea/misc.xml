@@ -9,6 +9,7 @@
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/activity_camera_preview.xml" value="0.5" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/activity_create_food.xml" value="0.5" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/activity_settings.xml" value="0.33" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/affirmation_item.xml" value="0.421875" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/dialog_fragment_create_food.xml" value="2.151315789473684" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/food_item.xml" value="0.25" />
@@ -16,8 +17,11 @@
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/fragment_camera_preview.xml" value="0.4547008547008547" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/fragment_create_food.xml" value="0.5" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/fragment_food_list.xml" value="0.2695035460992908" />
+        <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/preference_time_picker.xml" value="0.39114583333333336" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/layout/recycler_food_item.xml" value="0.5" />
+        <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/menu/menu_action_buttons.xml" value="0.5" />
         <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.285" />
+        <entry key="..\:/Projekty/Kotlin/RemindeMe/app/src/main/res/xml/root_preferences.xml" value="0.39114583333333336" />
       </map>
     </option>
   </component>
