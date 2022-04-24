@@ -133,7 +133,7 @@ class FoodCreateFragment(
         val regex =
             """(0?[1-9]|[12][0-9]|3[01])[- /.:](0?[1-9]|1[012])[- /.:](19|20)\d\d""".toRegex()
 
-        var matchResult: MatchResult? = null
+        var matchResult: MatchResult?
         for (block in textBlocks) {
             matchResult = regex.find(block.text)
 

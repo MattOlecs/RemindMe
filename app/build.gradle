@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
+
 apply plugin: 'kotlin-kapt'
 android {
     compileSdk 31
@@ -77,13 +78,4 @@ dependencies {
     implementation "androidx.room:room-guava:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
     implementation "androidx.room:room-paging:2.5.0-alpha01"
-
-    //CameraX
-    def camerax_version = "1.1.0-beta02"
-    implementation "androidx.camera:camera-core:${camerax_version}"
-    implementation "androidx.camera:camera-camera2:${camerax_version}"
-    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
-    implementation "androidx.camera:camera-video:${camerax_version}"
-    implementation "androidx.camera:camera-view:${camerax_version}"
-    implementation "androidx.camera:camera-extensions:${camerax_version}"
 }
