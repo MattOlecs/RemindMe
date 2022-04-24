@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity(), IFoodCreateDialogListener {
         supportFragmentManager
             .beginTransaction()
             .add(R.id.root_layout, FoodListFragment.newInstance(), fragmentTag)
+            .addToBackStack("main")
             .commit()
         supportFragmentManager.executePendingTransactions()
 
@@ -67,7 +68,8 @@ class MainActivity : AppCompatActivity(), IFoodCreateDialogListener {
         R.id.settings_button -> {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.root_layout, SettingsFragment())
+                .replace(foodListFragment.id, SettingsFragment())
+                .addToBackStack("main")
                 .commit()
             supportFragmentManager.executePendingTransactions()
             true

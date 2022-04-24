@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingHorizontal="14sp"
+    android:paddingHorizontal="75dp"
     android:paddingVertical="16dp"
     android:hapticFeedbackEnabled="false"
     android:background="?attr/selectableItemBackground">
@@ -13,13 +13,15 @@
         android:id="@+id/timePickerTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/notification_hour_name"/>
+        android:text="@string/notification_hour_name"
+        android:textColor="@color/black"
+        android:textSize="17sp"/>
 
     <TextView
         android:id="@+id/timePickerDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/notification_hour_description"
-        android:textSize="11sp"/>
+        android:textSize="13sp"/>
 
 </LinearLayout>

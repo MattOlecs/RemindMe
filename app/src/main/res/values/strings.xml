@@ -11,7 +11,7 @@
     <string name="affirmation9">Things will unfold at precisely the right time.</string>
     <string name="affirmation10">I will be present in all the moments that this day brings.</string>
     <string name="notification_time_setting_text">Preferred notifications time:</string>
-    <string name="notification_hour_name">Time</string>
+    <string name="notification_hour_name">Set time</string>
     <string name="notification_hour_description">Preferred notifications time</string>
 
     <!-- Preference Titles -->
