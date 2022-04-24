@@ -6,6 +6,7 @@
     <PreferenceCategory app:title="@string/notifications_header">
 
         <mateusz.oleksik.remindeme.preferences.TimePickerPreference
+            android:key="@string/notification_time_picker_key"
             android:layout="@layout/preference_time_picker"
             android:selectable="true" />
 

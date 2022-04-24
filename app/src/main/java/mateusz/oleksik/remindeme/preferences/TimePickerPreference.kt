@@ -10,7 +10,7 @@ import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceViewHolder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import mateusz.oleksik.remindeme.MainActivity
+import mateusz.oleksik.remindeme.acitivties.MainActivity
 import mateusz.oleksik.remindeme.R
 import mateusz.oleksik.remindeme.databinding.PreferenceTimePickerBinding
 import java.time.LocalTime

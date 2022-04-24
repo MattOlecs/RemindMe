@@ -1,10 +1,13 @@
-package mateusz.oleksik.remindeme
+package mateusz.oleksik.remindeme.acitivties
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.preference.PreferenceManager
+import mateusz.oleksik.remindeme.R
 import mateusz.oleksik.remindeme.databinding.ActivityMainBinding
 import mateusz.oleksik.remindeme.fragments.FoodCreateFragment
 import mateusz.oleksik.remindeme.fragments.FoodListFragment
@@ -49,6 +52,9 @@ class MainActivity : AppCompatActivity(), IFoodCreateDialogListener {
     private fun openCreateFoodDialog() {
         val dialog = FoodCreateFragment(this)
         dialog.show(supportFragmentManager, "createFoodDialog")
+        val hour = PreferenceManager.getDefaultSharedPreferences(this).getString("notification_hour", "8").toString()
+        val minute = PreferenceManager.getDefaultSharedPreferences(this).getString("notification_minute", "8").toString()
+        Toast.makeText(this, "${hour}:${minute}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreatedFood(food: Food) {
