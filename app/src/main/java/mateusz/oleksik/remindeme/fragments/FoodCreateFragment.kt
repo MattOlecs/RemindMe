@@ -174,7 +174,7 @@ class FoodCreateFragment(
                     Log.d(Constants.DebugLogTag, "Parsing JSON failed: ${ex.message}")
                     Toast.makeText(
                         context,
-                        "Product with barcode ${productBarcode} not found. Try scanning again.",
+                        "Product with barcode $productBarcode not found. Try scanning again.",
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -205,28 +205,25 @@ class FoodCreateFragment(
                     val data = result.data?.extras
                     val bitmap = data?.get("data") as Bitmap
                     val camComp = CameraUtils.getRotationCompensation(requireActivity())
-                    val image = InputImage.fromBitmap(bitmap, camComp)
+                    val image = InputImage.fromBitmap(bitmap, 0)
+
 
                     recognizer.process(image)
                         .addOnSuccessListener { visionText ->
-                            try {
-                                if (visionText.textBlocks.isNotEmpty()) {
-                                    tryExtractDateFromString(visionText.textBlocks)
-                                } else {
-                                    throw OCRException("No text detected in the picture")
-                                }
-                            } catch (ex: Exception) {
+                            if (visionText.textBlocks.isEmpty()) {
                                 Toast.makeText(
                                     context,
-                                    "Text recognition failed: ${ex.message}",
+                                    "No text found in the picture",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                            } else {
+                                tryExtractDateFromString(visionText.textBlocks)
                             }
                         }
-                        .addOnFailureListener { ex ->
+                        .addOnFailureListener { e ->
                             Toast.makeText(
                                 context,
-                                "Text recognition failed: ${ex.message}",
+                                "Text recognition failed: $camComp. ${e.localizedMessage}",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -248,7 +245,7 @@ class FoodCreateFragment(
                     val data = result.data?.extras
                     val bitmap = data?.get("data") as Bitmap
                     val camComp = CameraUtils.getRotationCompensation(requireActivity())
-                    val image = InputImage.fromBitmap(bitmap, camComp)
+                    val image = InputImage.fromBitmap(bitmap, 0)
 
 
                     scanner.process(image)
