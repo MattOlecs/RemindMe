@@ -130,8 +130,7 @@ class FoodCreateFragment(
     }
 
     private fun tryExtractDateFromString(textBlocks: MutableList<Text.TextBlock>) {
-        val regex =
-            """(0?[1-9]|[12][0-9]|3[01])[- /.:](0?[1-9]|1[012])[- /.:](19|20)\d\d""".toRegex()
+        val regex = Constants.DateDetectionPatternRegex.toRegex()
 
         var matchResult: MatchResult?
         for (block in textBlocks) {
@@ -168,8 +167,17 @@ class FoodCreateFragment(
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             { response ->
-                val foodName = response.getJSONObject("product").getString("product_name")
-                setFoodName(foodName)
+                try {
+                    val foodName = response.getJSONObject("product").getString("product_name")
+                    setFoodName(foodName)
+                } catch (ex: Exception) {
+                    Log.d(Constants.DebugLogTag, "Parsing JSON failed: ${ex.message}")
+                    Toast.makeText(
+                        context,
+                        "Product with barcode ${productBarcode} not found. Try scanning again.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             },
             { error ->
                 Log.d(Constants.DebugLogTag, "API call failed: ${error.message}")
@@ -216,7 +224,11 @@ class FoodCreateFragment(
                             }
                         }
                         .addOnFailureListener { ex ->
-                            Toast.makeText(context, ex.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "Text recognition failed: ${ex.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                 }
             }
