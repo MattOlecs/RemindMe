@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.coroutines.runBlocking
 import mateusz.oleksik.remindeme.models.Food
@@ -15,7 +16,8 @@ import mateusz.oleksik.remindeme.database.repositories.FoodStorageRepository
 import mateusz.oleksik.remindeme.databinding.FragmentFoodListBinding
 import mateusz.oleksik.remindeme.interfaces.IFoodItemClickListener
 import mateusz.oleksik.remindeme.utils.Constants
-import mateusz.oleksik.remindeme.utils.NotificationUtils
+import mateusz.oleksik.remindeme.utils.Extensions.Companion.compareDateMonthYear
+import mateusz.oleksik.remindeme.services.NotificationsService
 import java.util.*
 
 class FoodListFragment : Fragment(), IFoodItemClickListener {
@@ -64,6 +66,7 @@ class FoodListFragment : Fragment(), IFoodItemClickListener {
     fun addFoodToAdapter(food: Food) {
         runBlocking { _foodStorageRepository.insertAll(food) }
         _foodAdapter.addFood(food)
+        refreshNotifications()
 
         Log.i(
             Constants.InfoLogTag,
@@ -73,6 +76,7 @@ class FoodListFragment : Fragment(), IFoodItemClickListener {
 
     override fun foodItemClicked(position: Int, foodToDelete: Food) {
         runBlocking { _foodStorageRepository.delete(foodToDelete) }
+        refreshNotifications()
 
         Log.i(
             Constants.InfoLogTag,
@@ -97,34 +101,59 @@ class FoodListFragment : Fragment(), IFoodItemClickListener {
     }
 
     private fun refreshNotifications(){
-        val notificationUtils = NotificationUtils(_context)
+        val notificationUtils = NotificationsService(_context)
         notificationUtils.cancelReminder()
 
+        val notificationHour =
+            PreferenceManager
+                .getDefaultSharedPreferences(_context)
+                .getString("notification_hour", "16")
+                .toString()
+                .toIntOrNull() ?: 16
+        val notificationMinute =
+            PreferenceManager
+                .getDefaultSharedPreferences(_context)
+                .getString("notification_minute", "0")
+                .toString()
+                .toIntOrNull() ?: 0
+
+        var currentTime = Calendar.getInstance()
+        val notificationTime = Calendar
+            .getInstance()
+
+        notificationTime.set(Calendar.HOUR_OF_DAY, notificationHour)
+        notificationTime.set(Calendar.MINUTE, notificationMinute)
+
+        if (currentTime.time > notificationTime.time){
+            return
+        }
+
         for (food in _foodList){
-            val restrictionDate = Calendar.getInstance()
-            restrictionDate.set(Calendar.HOUR_OF_DAY, 0)
-            restrictionDate.set(Calendar.MINUTE, 0)
-
-            val foodExpirationDate = Calendar.getInstance();
+            val foodExpirationDate = Calendar.getInstance()
             foodExpirationDate.timeInMillis = food.expirationDate
+            currentTime = Calendar.getInstance()
 
-            if (foodExpirationDate.time < restrictionDate.time){
-                continue;
+            foodExpirationDate.set(Calendar.HOUR_OF_DAY, 0)
+            foodExpirationDate.set(Calendar.MINUTE, 0)
+            foodExpirationDate.set(Calendar.SECOND, 0)
+
+            currentTime.set(Calendar.HOUR_OF_DAY, 0)
+            currentTime.set(Calendar.MINUTE, 0)
+            currentTime.set(Calendar.SECOND, 0)
+
+            if (!foodExpirationDate.compareDateMonthYear(currentTime)){
+                continue
             }
 
-            restrictionDate.add(Calendar.DATE, 1)
-
-            if (foodExpirationDate.time > restrictionDate.time){
-                continue;
+            currentTime.add(Calendar.DATE, 1)
+            if (foodExpirationDate.time > currentTime.time){
+                continue
             }
-
-            foodExpirationDate.set(Calendar.HOUR_OF_DAY, 18)
-            foodExpirationDate.set(Calendar.MINUTE, 30)
 
             notificationUtils.setReminder(
                 "Don't waste!",
                 "${food.name} is going to expire soon!",
-                foodExpirationDate.timeInMillis)
+                notificationTime.timeInMillis)
         }
     }
 }

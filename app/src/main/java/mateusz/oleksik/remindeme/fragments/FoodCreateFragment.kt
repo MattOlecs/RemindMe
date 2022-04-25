@@ -139,7 +139,7 @@ class FoodCreateFragment(
 
             if (matchResult != null) {
                 setDateOnCalendar(matchResult.value)
-                return@tryExtractDateFromString
+                return
             }
         }
 

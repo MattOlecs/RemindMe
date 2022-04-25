@@ -52,9 +52,6 @@ class MainActivity : AppCompatActivity(), IFoodCreateDialogListener {
     private fun openCreateFoodDialog() {
         val dialog = FoodCreateFragment(this)
         dialog.show(supportFragmentManager, "createFoodDialog")
-        val hour = PreferenceManager.getDefaultSharedPreferences(this).getString("notification_hour", "8").toString()
-        val minute = PreferenceManager.getDefaultSharedPreferences(this).getString("notification_minute", "8").toString()
-        Toast.makeText(this, "${hour}:${minute}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreatedFood(food: Food) {
