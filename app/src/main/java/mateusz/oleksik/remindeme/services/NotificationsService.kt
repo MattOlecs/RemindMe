@@ -1,4 +1,4 @@
-package mateusz.oleksik.remindeme.utils
+package mateusz.oleksik.remindeme.services
 
 import android.app.*
 import android.content.Context
@@ -6,9 +6,11 @@ import android.content.ContextWrapper
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import mateusz.oleksik.remindeme.R
+import mateusz.oleksik.remindeme.utils.Constants
+import mateusz.oleksik.remindeme.utils.ReminderBroadcast
 import kotlin.random.Random
 
-class NotificationUtils(context: Context) : ContextWrapper(context) {
+class NotificationsService(context: Context) : ContextWrapper(context) {
 
     private var _context: Context = context
     private lateinit var _notificationManager: NotificationManager

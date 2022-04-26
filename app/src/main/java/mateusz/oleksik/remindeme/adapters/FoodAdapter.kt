@@ -4,7 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import mateusz.oleksik.remindeme.models.Food
@@ -14,7 +13,7 @@ import mateusz.oleksik.remindeme.utils.Constants
 
 class FoodAdapter(
     private val foodsList: MutableList<Food>,
-    private val listenerI: IFoodItemClickListener
+    private val listener: IFoodItemClickListener
 ) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
 
     init {
@@ -41,7 +40,7 @@ class FoodAdapter(
         holder.setData(food)
 
         holder.deleteButton.setOnClickListener {
-            listenerI.foodItemClicked(position, food)
+            listener.foodItemClicked(position, food)
             foodsList.remove(food)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemCount)

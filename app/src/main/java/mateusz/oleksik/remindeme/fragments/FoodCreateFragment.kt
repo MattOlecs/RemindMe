@@ -130,8 +130,7 @@ class FoodCreateFragment(
     }
 
     private fun tryExtractDateFromString(textBlocks: MutableList<Text.TextBlock>) {
-        val regex =
-            """(0?[1-9]|[12][0-9]|3[01])[- /.:](0?[1-9]|1[012])[- /.:](19|20)\d\d""".toRegex()
+        val regex = Constants.DateDetectionPatternRegex.toRegex()
 
         var matchResult: MatchResult?
         for (block in textBlocks) {
@@ -139,7 +138,7 @@ class FoodCreateFragment(
 
             if (matchResult != null) {
                 setDateOnCalendar(matchResult.value)
-                return@tryExtractDateFromString
+                return
             }
         }
 
@@ -168,8 +167,17 @@ class FoodCreateFragment(
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             { response ->
-                val foodName = response.getJSONObject("product").getString("product_name")
-                setFoodName(foodName)
+                try {
+                    val foodName = response.getJSONObject("product").getString("product_name")
+                    setFoodName(foodName)
+                } catch (ex: Exception) {
+                    Log.d(Constants.DebugLogTag, "Parsing JSON failed: ${ex.message}")
+                    Toast.makeText(
+                        context,
+                        "Product with barcode $productBarcode not found. Try scanning again.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             },
             { error ->
                 Log.d(Constants.DebugLogTag, "API call failed: ${error.message}")
@@ -197,26 +205,27 @@ class FoodCreateFragment(
                     val data = result.data?.extras
                     val bitmap = data?.get("data") as Bitmap
                     val camComp = CameraUtils.getRotationCompensation(requireActivity())
-                    val image = InputImage.fromBitmap(bitmap, camComp)
+                    val image = InputImage.fromBitmap(bitmap, 0)
+
 
                     recognizer.process(image)
                         .addOnSuccessListener { visionText ->
-                            try {
-                                if (visionText.textBlocks.isNotEmpty()) {
-                                    tryExtractDateFromString(visionText.textBlocks)
-                                } else {
-                                    throw OCRException("No text detected in the picture")
-                                }
-                            } catch (ex: Exception) {
+                            if (visionText.textBlocks.isEmpty()) {
                                 Toast.makeText(
                                     context,
-                                    "Text recognition failed: ${ex.message}",
+                                    "No text found in the picture",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                            } else {
+                                tryExtractDateFromString(visionText.textBlocks)
                             }
                         }
-                        .addOnFailureListener { ex ->
-                            Toast.makeText(context, ex.message, Toast.LENGTH_SHORT).show()
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                context,
+                                "Text recognition failed: $camComp. ${e.localizedMessage}",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                 }
             }
@@ -236,7 +245,7 @@ class FoodCreateFragment(
                     val data = result.data?.extras
                     val bitmap = data?.get("data") as Bitmap
                     val camComp = CameraUtils.getRotationCompensation(requireActivity())
-                    val image = InputImage.fromBitmap(bitmap, camComp)
+                    val image = InputImage.fromBitmap(bitmap, 0)
 
 
                     scanner.process(image)
