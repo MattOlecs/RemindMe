@@ -31,7 +31,7 @@ class NotificationsService(context: Context) : ContextWrapper(context) {
             .setSmallIcon(R.drawable.ic_food_salad_icon)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setGroup("RemindeMe")
+            .setGroup("RemindMe")
     }
 
     fun setReminder(title: String, content: String, timeInMillis: Long) {
