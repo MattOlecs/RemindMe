@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="mateusz.oleksik.remindeme">
+    package="mateusz.oleksik.remindme">
 
     <uses-feature android:name="android.hardware.camera.any" />
 
@@ -16,7 +16,7 @@
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
         >
         <activity
-            android:name=".acitivties.MainActivity"
+            android:name="mateusz.oleksik.remindme.acitivties.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".utils.ReminderBroadcast" />
+        <receiver android:name="mateusz.oleksik.remindme.utils.ReminderBroadcast" />
     </application>
 </manifest>
