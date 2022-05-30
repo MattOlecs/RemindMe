@@ -112,10 +112,9 @@ class FoodListFragment : Fragment(), IFoodItemClickListener {
         }
     }
 
-
     private fun refreshNotifications(){
         val notificationUtils = NotificationsService(_context)
-        notificationUtils.cancelReminder()
+        notificationUtils.cancelAllAlarms()
 
         val notificationHour =
             PreferenceManager
@@ -166,7 +165,8 @@ class FoodListFragment : Fragment(), IFoodItemClickListener {
             notificationUtils.setReminder(
                 "Don't waste!",
                 "${food.name} is going to expire soon!",
-                notificationTime.timeInMillis)
+                notificationTime.timeInMillis,
+                food.id)
         }
     }
 }

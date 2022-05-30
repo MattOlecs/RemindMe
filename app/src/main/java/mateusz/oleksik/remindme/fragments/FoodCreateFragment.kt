@@ -31,7 +31,6 @@ import mateusz.oleksik.remindme.databinding.FragmentCreateFoodBinding
 import mateusz.oleksik.remindme.models.Food
 import mateusz.oleksik.remindme.exceptions.OCRException
 import mateusz.oleksik.remindme.interfaces.IFoodCreateDialogListener
-import mateusz.oleksik.remindme.utils.CameraUtils
 import mateusz.oleksik.remindme.utils.Constants
 import mateusz.oleksik.remindme.utils.DateUtils
 import mateusz.oleksik.remindme.utils.Extensions.Companion.toShortDateString
@@ -41,16 +40,16 @@ class FoodCreateFragment(
     private val listener: IFoodCreateDialogListener
 ) : DialogFragment() {
 
-    private lateinit var dateRecognitionResultLauncher: ActivityResultLauncher<Intent>
-    private lateinit var barcodeRecognitionResultLauncher: ActivityResultLauncher<Intent>
-    private lateinit var binding: FragmentCreateFoodBinding
+    private lateinit var _dateRecognitionResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var _barcodeRecognitionResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var _binding: FragmentCreateFoodBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCreateFoodBinding.inflate(inflater, container, false)
+        _binding = FragmentCreateFoodBinding.inflate(inflater, container, false)
 
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -62,34 +61,34 @@ class FoodCreateFragment(
         initializeBarcodeScanner()
         initializeDateScanner()
 
-        binding.foodCreateCalendarView.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
+        _binding.foodCreateCalendarView.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
             calendarView.date = getDateFromInt(year, month, dayOfMonth)
         }
-        binding.foodCreateCancelButton.setOnClickListener {
+        _binding.foodCreateCancelButton.setOnClickListener {
             dismiss()
         }
-        binding.foodCreateConfirmButton.setOnClickListener {
+        _binding.foodCreateConfirmButton.setOnClickListener {
             createFood()
         }
-        binding.foodCreateDateRecognitionButton.setOnClickListener {
-            getExpirationDateFromImage()
+        _binding.foodCreateDateRecognitionButton.setOnClickListener {
+            scanExpirationDateImage()
         }
-        binding.foodCreateBarcodeScanButton.setOnClickListener {
+        _binding.foodCreateBarcodeScanButton.setOnClickListener {
             scanBarcodeImage()
         }
 
-        return binding.root
+        return _binding.root
     }
 
     private fun createFood() {
-        if (binding.foodCreateNameTextView.text.isEmpty()){
+        if (_binding.foodCreateNameTextView.text.isEmpty()){
             Toast.makeText(context, "Please enter name", Toast.LENGTH_SHORT)
                 .show()
             return
         }
 
-        val foodName = binding.foodCreateNameTextView.text.toString()
-        val expirationDate = binding.foodCreateCalendarView.date
+        val foodName = _binding.foodCreateNameTextView.text.toString()
+        val expirationDate = _binding.foodCreateCalendarView.date
 
         listener.onCreatedFood(Food(0, foodName, expirationDate))
         dismiss()
@@ -99,7 +98,7 @@ class FoodCreateFragment(
         if (allPermissionsGranted()) {
             try {
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                barcodeRecognitionResultLauncher.launch(intent)
+                _barcodeRecognitionResultLauncher.launch(intent)
             } catch (ex: OCRException) {
                 Toast.makeText(context, ex.message, Toast.LENGTH_SHORT).show()
             }
@@ -112,11 +111,11 @@ class FoodCreateFragment(
         }
     }
 
-    private fun getExpirationDateFromImage() {
+    private fun scanExpirationDateImage() {
         if (allPermissionsGranted()) {
             try {
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                dateRecognitionResultLauncher.launch(intent)
+                _dateRecognitionResultLauncher.launch(intent)
             } catch (ex: OCRException) {
                 Toast.makeText(context, ex.message, Toast.LENGTH_SHORT).show()
             }
@@ -155,7 +154,7 @@ class FoodCreateFragment(
         val dateResult = DateUtils.tryParseDate(dateString)
 
         if (dateResult != null) {
-            binding.foodCreateCalendarView.date = dateResult.time
+            _binding.foodCreateCalendarView.date = dateResult.time
             Toast.makeText(
                 context,
                 "Date extracted from picture: ${dateResult.time.toShortDateString()}",
@@ -165,7 +164,7 @@ class FoodCreateFragment(
     }
 
     private fun setFoodName(name: String) {
-        binding.foodCreateNameTextView.setText(name)
+        _binding.foodCreateNameTextView.setText(name)
     }
 
     private fun sendAPICall(productBarcode: String) {
@@ -178,16 +177,15 @@ class FoodCreateFragment(
                     setFoodName(foodName)
                 } catch (ex: Exception) {
                     Log.d(Constants.DebugLogTag, "Parsing JSON failed: ${ex.message}")
-                    Toast.makeText(
-                        context,
-                        "Product with barcode $productBarcode not found. Try scanning again.",
-                        Toast.LENGTH_LONG
-                    ).show()
                 }
             },
             { error ->
                 Log.d(Constants.DebugLogTag, "API call failed: ${error.message}")
-                Toast.makeText(context, "API call unsuccessful", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    context,
+                    "Product with barcode $productBarcode not found. Try scanning again.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         )
 
@@ -204,15 +202,12 @@ class FoodCreateFragment(
     private fun initializeDateScanner() {
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
-        dateRecognitionResultLauncher =
+        _dateRecognitionResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
-
                     val data = result.data?.extras
                     val bitmap = data?.get("data") as Bitmap
-                    val camComp = CameraUtils.getRotationCompensation(requireActivity())
                     val image = InputImage.fromBitmap(bitmap, 0)
-
 
                     recognizer.process(image)
                         .addOnSuccessListener { visionText ->
@@ -229,7 +224,7 @@ class FoodCreateFragment(
                         .addOnFailureListener { e ->
                             Toast.makeText(
                                 context,
-                                "Text recognition failed: $camComp. ${e.localizedMessage}",
+                                "Text recognition failed: ${e.localizedMessage}",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -245,14 +240,12 @@ class FoodCreateFragment(
             .build()
         val scanner = BarcodeScanning.getClient(options)
 
-        barcodeRecognitionResultLauncher =
+        _barcodeRecognitionResultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     val data = result.data?.extras
                     val bitmap = data?.get("data") as Bitmap
-                    val camComp = CameraUtils.getRotationCompensation(requireActivity())
                     val image = InputImage.fromBitmap(bitmap, 0)
-
 
                     scanner.process(image)
                         .addOnSuccessListener { barcodes ->

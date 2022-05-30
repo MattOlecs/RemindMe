@@ -12,7 +12,7 @@ import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceViewHolder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import mateusz.oleksik.remindme.acitivties.MainActivity
+import mateusz.oleksik.remindme.activities.MainActivity
 import mateusz.oleksik.remindme.R
 import mateusz.oleksik.remindme.databinding.PreferenceTimePickerBinding
 import mateusz.oleksik.remindme.utils.Constants
@@ -60,6 +60,7 @@ class TimePickerPreference(context: Context, attrs: AttributeSet?) : Preference(
                     .setHour(currentHour.toInt())
                     .setMinute(currentMinute.toInt())
                     .setTitleText(context.getString(R.string.notification_hour_name))
+                    .setTheme(R.style.TimePicker)
                     .build()
 
             picker.addOnPositiveButtonClickListener {

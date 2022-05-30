@@ -9,5 +9,7 @@
 
     <!-- Preference keys -->
     <string name="notification_time_picker_key">time_picker_notification</string>
+    <string name="create_food_button_description">Open food create dialog button</string>
+    <string name="settings_button_title">settings_button</string>
 
 </resources>

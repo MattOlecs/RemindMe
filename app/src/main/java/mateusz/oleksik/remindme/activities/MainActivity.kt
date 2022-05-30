@@ -1,4 +1,4 @@
-package mateusz.oleksik.remindme.acitivties
+package mateusz.oleksik.remindme.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), IFoodCreateDialogListener {
         setSupportActionBar(_binding.myToolbar)
 
         if (savedInstanceState == null) {
-            generateFoodList()
+            generateFoodListView()
 
             _binding.addFoodActionButton.setOnClickListener {
                 openCreateFoodDialog()
@@ -34,17 +34,16 @@ class MainActivity : AppCompatActivity(), IFoodCreateDialogListener {
         }
     }
 
-    private fun generateFoodList() {
-        val fragmentTag = "foodList"
+    private fun generateFoodListView() {
+        val foodListFragmentTag = "foodList"
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.root_layout, FoodListFragment.newInstance(), fragmentTag)
-            .addToBackStack("main")
+            .add(R.id.root_layout, FoodListFragment.newInstance(), foodListFragmentTag)
             .commit()
         supportFragmentManager.executePendingTransactions()
 
         _foodListFragment =
-            supportFragmentManager.findFragmentByTag(fragmentTag) as FoodListFragment
+            supportFragmentManager.findFragmentByTag(foodListFragmentTag) as FoodListFragment
     }
 
     private fun openCreateFoodDialog() {
@@ -65,19 +64,31 @@ class MainActivity : AppCompatActivity(), IFoodCreateDialogListener {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.settings_button -> {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(_foodListFragment.id, SettingsFragment())
-                .addToBackStack("main")
-                .commit()
-            supportFragmentManager.executePendingTransactions()
-            true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId != R.id.settings_button){
+            return false
         }
 
-        else -> {
-            super.onOptionsItemSelected(item)
+        _binding.addFoodActionButton.hide()
+
+        val foodListFragmentTag = "settingsFragment"
+        val fragment = supportFragmentManager.findFragmentByTag(foodListFragmentTag)
+        if (fragment != null){
+            return false
         }
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(_foodListFragment.id, SettingsFragment(), foodListFragmentTag)
+            .addToBackStack("main")
+            .commit()
+        supportFragmentManager.executePendingTransactions()
+        return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        _binding.addFoodActionButton.show()
     }
 }

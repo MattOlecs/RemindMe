@@ -1,11 +1,15 @@
 package mateusz.oleksik.remindme.adapters
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.util.Log
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
+import mateusz.oleksik.remindme.R
 import mateusz.oleksik.remindme.models.Food
 import mateusz.oleksik.remindme.databinding.RecyclerFoodItemBinding
 import mateusz.oleksik.remindme.interfaces.IFoodItemClickListener
@@ -40,10 +44,18 @@ class FoodAdapter(
         holder.setData(food)
 
         holder.deleteButton.setOnClickListener {
-            foodList.remove(food)
-            listener.foodItemClicked(position, food)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, itemCount)
+
+            AlertDialog.Builder(ContextThemeWrapper(holder.deleteButton.context, R.style.AlertDialog))
+                .setTitle("Deleting")
+                .setMessage("Are you sure you want to delete `${food.name}` from list?")
+                .setPositiveButton("Yes") { _, _ ->
+                    foodList.remove(food)
+                    listener.foodItemClicked(position, food)
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, itemCount)
+                }
+                .setNegativeButton("No", null)
+                .show()
         }
     }
 
