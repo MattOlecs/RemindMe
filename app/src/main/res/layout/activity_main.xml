@@ -5,7 +5,7 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mateusz.oleksik.remindme.acitivties.MainActivity">
+    tools:theme="@style/Theme.RemindMe">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -14,16 +14,21 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_food_action_button"
-        android:layout_width="58dp"
-        android:layout_height="55dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:contentDescription="@string/create_food_button_description"
+        app:backgroundTint="?attr/colorPrimary"
+        app:fabCustomSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add" />
+        app:srcCompat="@drawable/ic_add_icon"
+        app:tint="?attr/colorSecondary" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

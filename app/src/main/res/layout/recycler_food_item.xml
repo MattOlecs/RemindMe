@@ -25,6 +25,7 @@
                 android:layout_height="50dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_food_salad_icon"
+                app:tint="?attr/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_food_salad_icon" />
@@ -36,6 +37,7 @@
                 android:layout_marginLeft="8dp"
                 android:text="@{Food.name}"
                 android:textSize="20sp"
+                android:textColor="?attr/colorSecondary"
                 app:layout_constraintBottom_toTopOf="@+id/food_list_expiration_date_text"
                 app:layout_constraintStart_toEndOf="@+id/food_image"
                 app:layout_constraintTop_toTopOf="parent"
@@ -46,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:textColor="?attr/colorSecondary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/food_image"
                 app:long_to_date_formatter="@{Food.expirationDate}"
