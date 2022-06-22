@@ -38,17 +38,23 @@ class NotificationsService(context: Context) : ContextWrapper(context) {
     }
 
     fun setReminder(title: String, content: String, timeInMillis: Long, id: Int) {
-        val broadcastIntent = Intent(_context, ReminderBroadcast::class.java)
-        broadcastIntent.action = "Extras holder"
-        broadcastIntent.putExtra(Constants.NotificationExtraTitleHolderName, title)
-        broadcastIntent.putExtra(Constants.NotificationExtraContentHolderName, content)
+        try {
+            val broadcastIntent = Intent(_context, ReminderBroadcast::class.java)
+            broadcastIntent.action = "Extras holder"
+            broadcastIntent.putExtra(Constants.NotificationExtraTitleHolderName, title)
+            broadcastIntent.putExtra(Constants.NotificationExtraContentHolderName, content)
 
-        val pendingIntent = PendingIntent.getBroadcast(_context, id, broadcastIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+            val pendingIntent = PendingIntent.getBroadcast(_context, id, broadcastIntent, PendingIntent.FLAG_CANCEL_CURRENT)
 
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent)
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.set(AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent)
 
-        saveAlarmId(id)
+            saveAlarmId(id)
+        } catch (e: Exception) {
+            AlertDialog.Builder(_context)
+                .setTitle("Creating reminder failed!")
+                .setMessage(e.localizedMessage)
+        }
     }
 
     private fun createChannel() {
@@ -62,8 +68,14 @@ class NotificationsService(context: Context) : ContextWrapper(context) {
     }
 
     fun cancelAllAlarms() {
-        for (alarmId in getAlarmIds()) {
-            cancelAlarm(alarmId)
+        try {
+            for (alarmId in getAlarmIds()) {
+                cancelAlarm(alarmId)
+            }
+        } catch (e: Exception) {
+            AlertDialog.Builder(_context)
+                .setTitle("Cancelling previous notifications failed!")
+                .setMessage(e.localizedMessage)
         }
     }
 

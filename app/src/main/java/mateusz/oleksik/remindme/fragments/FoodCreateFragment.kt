@@ -218,7 +218,16 @@ class FoodCreateFragment(
                                     Toast.LENGTH_SHORT
                                 ).show()
                             } else {
-                                tryExtractDateFromString(visionText.textBlocks)
+                                try {
+                                    tryExtractDateFromString(visionText.textBlocks)
+                                } catch (ex: Exception) {
+                                    Toast.makeText(
+                                        context,
+                                        ex.localizedMessage,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
                             }
                         }
                         .addOnFailureListener { e ->

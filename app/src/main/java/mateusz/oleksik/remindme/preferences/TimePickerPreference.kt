@@ -29,21 +29,27 @@ class TimePickerPreference(context: Context, attrs: AttributeSet?) : Preference(
     val formatter: DateTimeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
 
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
-        sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-        currentHour = sharedPrefs.getString(Constants.PreferencesNotificationHourStringName, "16").toString()
-        currentMinute = sharedPrefs.getString(Constants.PreferencesNotificationMinuteStringName, "0").toString()
-        super.onBindViewHolder(holder)
-        binding = PreferenceTimePickerBinding.bind(holder.itemView)
+        try {
+            sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+            currentHour = sharedPrefs.getString(Constants.PreferencesNotificationHourStringName, "16").toString()
+            currentMinute = sharedPrefs.getString(Constants.PreferencesNotificationMinuteStringName, "0").toString()
+            super.onBindViewHolder(holder)
+            binding = PreferenceTimePickerBinding.bind(holder.itemView)
 
-        val currentTime = LocalTime.of(currentHour.toInt(), currentMinute.toInt())
+            val currentTime = LocalTime.of(currentHour.toInt(), currentMinute.toInt())
 
-        binding.timePickerDescription.text =
-            String.format(
-                context.getString(R.string.notification_hour_description),
-                "~${formatter.format(currentTime)}"
-            )
+            binding.timePickerDescription.text =
+                String.format(
+                    context.getString(R.string.notification_hour_description),
+                    "~${formatter.format(currentTime)}"
+                )
 
-        binding.root.setOnClickListener(this)
+            binding.root.setOnClickListener(this)
+        } catch (e: Exception) {
+            AlertDialog.Builder(context)
+                .setTitle("Opening preference failed!")
+                .setMessage(e.localizedMessage)
+        }
     }
 
     override fun onClick(v: View) {
